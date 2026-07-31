@@ -12,6 +12,33 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Marcellus&family=Tenor+Sans&display=swap" rel="stylesheet">
 <style>
+.music-toggle{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:200;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  border:1px solid var(--line-on-navy);
+  background:rgba(0,0,0,0.25);
+  backdrop-filter:blur(4px);
+  color:var(--ivory);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:opacity 0.2s ease;
+}
+.music-toggle:hover{opacity:0.8;}
+.music-toggle svg{width:20px; height:20px;}
+.music-toggle.playing svg{
+  animation:musicPulse 1.6s ease-in-out infinite;
+}
+@keyframes musicPulse{
+  0%,100%{opacity:1;}
+  50%{opacity:0.55;}
+}
   :root{
     --navy:#6B4438;
     --amarillo:#DEDC2C;
@@ -162,6 +189,35 @@
     margin:0 auto;
     opacity:0.6;
   }
+
+  .flourish{
+    width:112px;
+    height:22px;
+    display:block;
+    margin:0 auto 1rem;
+    color:var(--silver-line);
+    opacity:0.9;
+}
+.flourish.on-navy{color:var(--line-on-navy);}
+
+.footer-wreath{
+    position:relative;
+    width:150px;
+    height:150px;
+    margin:0 auto 0.6rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.footer-wreath svg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    color:var(--silver-line);
+    opacity:0.85;
+}
+.footer-wreath .monogram{position:relative; margin:0;}
 
   /* ---------- COUNTDOWN ---------- */
   .countdown-section{
@@ -422,6 +478,18 @@
 </head>
 <body>
 
+<!-- ===================== MÚSICA DE FONDO ===================== -->
+<audio id="bg-music" loop preload="none">
+  <source src="https://cdn.jsdelivr.net/gh/cadmo8-Web/invitacion@main/musica.mp3" type="audio/mpeg">
+</audio>
+<button id="music-toggle" class="music-toggle" aria-label="Reproducir música">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+    <circle cx="8" cy="17" r="3"/>
+    <circle cx="18" cy="15" r="3"/>
+    <path d="M11 17V5l10-2v12"/>
+  </svg>
+</button>
+
 <!-- ===================== HERO ===================== -->
 <section class="hero">
   <svg class="frame" viewBox="0 0 800 800" preserveAspectRatio="none" aria-hidden="true">
@@ -446,9 +514,10 @@
 </section>
 
 <!-- ===================== QUOTE ===================== -->
-<section class="quote-section">
-  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 11c0-3 2-5 5-6l1 2c-2 1-3 2-3 4h3v6H7v-6zm9 0c0-3 2-5 5-6l1 2c-2 1-3 2-3 4h3v6h-6v-6z"/></svg>
+<section class="quote-section"> 
+  
   <p>Dos caminos que se encuentran, una promesa que empieza. Gracias por acompañarnos a escribir el primer capítulo.</p>
+      
   <div class="signature">Claudia &amp; Daniel</div>
 </section>
 
@@ -456,6 +525,7 @@
 
 <!-- ===================== COUNTDOWN ===================== -->
 <section class="countdown-section">
+  <svg class="flourish on-navy" viewBox="0 0 120 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 12 C 20 4, 30 20, 44 12"/><path d="M76 12 C 90 20, 100 4, 116 12"/><ellipse cx="52" cy="8" rx="3" ry="6" transform="rotate(-20 52 8)"/><ellipse cx="68" cy="8" rx="3" ry="6" transform="rotate(20 68 8)"/><ellipse cx="60" cy="4" rx="3" ry="6"/><ellipse cx="54" cy="14" rx="3" ry="6" transform="rotate(-50 54 14)"/><ellipse cx="66" cy="14" rx="3" ry="6" transform="rotate(50 66 14)"/><circle cx="60" cy="10" r="2" fill="currentColor" stroke="none"/></svg>
   <h2>Faltan</h2>
   <div class="countdown" id="countdown">
     <div class="unit"><div class="num" id="cd-days">00</div><div class="label">Días</div></div>
@@ -468,13 +538,11 @@
 <!-- ===================== DETAILS ===================== -->
 <section class="details-section">
   <span class="eyebrow">El gran día</span>
+  <svg class="flourish" viewBox="0 0 120 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 12 C 20 4, 30 20, 44 12"/><path d="M76 12 C 90 20, 100 4, 116 12"/><ellipse cx="52" cy="8" rx="3" ry="6" transform="rotate(-20 52 8)"/><ellipse cx="68" cy="8" rx="3" ry="6" transform="rotate(20 68 8)"/><ellipse cx="60" cy="4" rx="3" ry="6"/><ellipse cx="54" cy="14" rx="3" ry="6" transform="rotate(-50 54 14)"/><ellipse cx="66" cy="14" rx="3" ry="6" transform="rotate(50 66 14)"/><circle cx="60" cy="10" r="2" fill="currentColor" stroke="none"/></svg>                     
   <h2>Ceremonia &amp; Celebración</h2>
   <div class="cards">
     <div class="card">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-    <circle cx="9" cy="14" r="5"/>
-    <circle cx="15" cy="14" r="5"/>
-  </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 L20 8 V21 H4 V8 Z"/><path d="M9 21 V13 H15 V21"/></svg>
       <h3>Ceremonia</h3>
       <div class="day">Sábado 19 de septiembre · 4:00 p.m.</div>
       <div class="place">Parroquia Nuestra Señora del Sagrado Corazón</div>
@@ -485,7 +553,7 @@
     <div class="card">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 20 L4 10 L12 4 L20 10 L20 20 Z"/><path d="M9 20 V15 H15 V20"/></svg>
       <h3>Celebración</h3>
-      <div class="day">Sábado 19 de septiembre · 6:00 p.m.</div>
+      <div class="day">Sábado 19 de septiembre · 5:00 p.m.</div>
       <div class="place">Hacienda El Rubí</div>
       <div class="addr">Sector (Arenillo Alto) 700 mts abajo del Hospital Santa Sofía</div>
       
@@ -496,9 +564,10 @@
 
 <!-- ===================== RSVP ===================== -->
 <section class="rsvp-section">
+  <svg class="flourish on-navy" viewBox="0 0 120 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 12 C 20 4, 30 20, 44 12"/><path d="M76 12 C 90 20, 100 4, 116 12"/><ellipse cx="52" cy="8" rx="3" ry="6" transform="rotate(-20 52 8)"/><ellipse cx="68" cy="8" rx="3" ry="6" transform="rotate(20 68 8)"/><ellipse cx="60" cy="4" rx="3" ry="6"/><ellipse cx="54" cy="14" rx="3" ry="6" transform="rotate(-50 54 14)"/><ellipse cx="66" cy="14" rx="3" ry="6" transform="rotate(50 66 14)"/><circle cx="60" cy="10" r="2" fill="currentColor" stroke="none"/></svg>
   <h2>Confirmar Asistencia</h2>
   <p>Nos encantaría saber que estarás ahí. Por favor confirma tu asistencia.</p>
-  <button class="btn-solid" onclick="openModal('modal-rsvp')">Confirmar asistencia</button>
+  
 </section>
 
 <!-- ===================== EXTRAS ===================== -->
@@ -528,6 +597,11 @@
 
 <!-- ===================== GALLERY ===================== -->
 <section class="gallery-section">
+  <svg class="flourish" viewBox="0 0 120 24" fill="none" stroke="currentColor" stroke-width="1">
+  <path d="M4 12 C 20 4, 30 20, 44 12"/>
+  <path d="M76 12 C 90 20, 100 4, 116 12"/>
+  <path d="M60 18 C 54 13, 49 9, 49 6 C 49 3.5, 51.5 2, 54 3 C 56.5 4, 58.5 6, 60 8 C 61.5 6, 63.5 4, 66 3 C 68.5 2, 71 3.5, 71 6 C 71 9, 66 13, 60 18 Z" fill="currentColor" stroke="none"/>
+</svg>
   <h2>Nuestra historia</h2>
   <p>Un instante, un recuerdo, una promesa</p>
   <div class="gallery-grid">
