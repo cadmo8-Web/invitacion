@@ -14,10 +14,8 @@ musicToggle.addEventListener('click', () => {
   if(bgMusic.paused){
     bgMusic.play();
     musicToggle.classList.add('playing');
-    musicToggle.setAttribute('aria-label', 'Pausar música');
   } else {
     bgMusic.pause();
     musicToggle.classList.remove('playing');
-    musicToggle.setAttribute('aria-label', 'Reproducir música');
   }
 });
